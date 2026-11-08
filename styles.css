@@ -51,7 +51,7 @@ header p {
   border-radius: 14px;
 
   background-color: #efdfcc;
-  background-image: url("images/hero-img.png");
+  background-image: url("images/hero-img.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -84,6 +84,13 @@ header p {
   line-height: 1.5;
   color: #735d50;
 }
+
+.logo-icon {
+    display: block;
+    width: 36px;
+    height: 36px;
+    margin: 0 auto 4px;
+} 
 
 .menu {
   margin-top: 24px;
@@ -255,7 +262,7 @@ header p {
         rgba(239, 223, 204, 0.95) 35%,
         rgba(239, 223, 204, 0) 75%
       ),
-      url("images/hero-img.png");
+      url("images/hero-img.webp");
 
     background-position: right center;
   }
