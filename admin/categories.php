@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/auth.php';
+requireAdmin();
+
 require '../config/db.php';
 
 $page = 'categories';
@@ -10,6 +13,11 @@ $p = max(1, (int)($_GET['page'] ?? 1));
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!validCsrfToken((string)($_POST['csrf_token'] ?? ''))) {
+        http_response_code(403);
+        exit('Invalid security token. Please refresh the page and try again.');
+    }
+
     $action = $_POST['action'] ?? '';
     $id     = (int)($_POST['id'] ?? 0);
     $msg    = '';
@@ -102,6 +110,7 @@ require 'includes/header.php';
         <h2 class="h5 mb-3"><?= $formId ? 'Edit category' : 'Add category' ?></h2>
 
         <form method="post" action="categories.php?<?= $baseQs ?>">
+          <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrfToken(), ENT_QUOTES, 'UTF-8') ?>">
           <input type="hidden" name="action" value="save">
           <input type="hidden" name="id" value="<?= $formId ?>">
 
@@ -179,24 +188,30 @@ require 'includes/header.php';
                       href="categories.php?<?= http_build_query(['edit' => $c['id'], 'q' => $q, 'page' => $p]) ?>"
                     >Edit</a>
 
-                    <form method="post" action="categories.php?<?= $baseQs ?>" class="d-inline">
-                      <input type="hidden" name="action" value="toggle">
-                      <input type="hidden" name="id" value="<?= $c['id'] ?>">
-                      <button class="btn btn-sm btn-outline-secondary">
-                        <?= $c['is_active'] ? 'Deactivate' : 'Activate' ?>
-                      </button>
-                    </form>
+                  
+<form method="post" action="categories.php?<?= $baseQs ?>" class="d-inline">
+  <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrfToken(), ENT_QUOTES, 'UTF-8') ?>">
+  <input type="hidden" name="action" value="toggle">
+  <input type="hidden" name="id" value="<?= $c['id'] ?>">
+  <button class="btn btn-sm btn-outline-secondary">
+    <?= $c['is_active'] ? 'Deactivate' : 'Activate' ?>
+  </button>
+</form>
 
-                    <form
-                      method="post"
-                      action="categories.php?<?= $baseQs ?>"
-                      class="d-inline"
-                      onsubmit="return confirm('Delete this category and its <?= (int)$c['items_count'] ?> items?');"
-                    >
-                      <input type="hidden" name="action" value="delete">
-                      <input type="hidden" name="id" value="<?= $c['id'] ?>">
-                      <button class="btn btn-sm btn-outline-danger">Delete</button>
-                    </form>
+
+                   
+<form
+  method="post"
+  action="categories.php?<?= $baseQs ?>"
+  class="d-inline"
+  onsubmit="return confirm('Delete this category and its <?= (int)$c['items_count'] ?> items?');"
+>
+  <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrfToken(), ENT_QUOTES, 'UTF-8') ?>">
+  <input type="hidden" name="action" value="delete">
+  <input type="hidden" name="id" value="<?= $c['id'] ?>">
+  <button class="btn btn-sm btn-outline-danger">Delete</button>
+</form>
+
                   </td>
                 </tr>
               <?php endforeach; ?>

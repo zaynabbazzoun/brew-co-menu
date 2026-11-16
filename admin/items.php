@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/auth.php';
+requireAdmin();
+
 require '../config/db.php';
 
 $page = 'items';
@@ -43,6 +46,11 @@ function uploadImage(array $file, string &$error): ?string
 $form = ['id' => 0, 'category_id' => '', 'name' => '', 'description' => '', 'price' => '', 'image' => ''];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!validCsrfToken((string)($_POST['csrf_token'] ?? ''))) {
+        http_response_code(403);
+        exit('Invalid security token. Please refresh the page and try again.');
+    }
+
     $action = $_POST['action'] ?? '';
     $id     = (int)($_POST['id'] ?? 0);
     $msg    = '';
@@ -187,6 +195,9 @@ require 'includes/header.php';
     <h2 class="h5 mb-3"><?= $formId ? 'Edit item' : 'Add item' ?></h2>
 
     <form method="post" action="items.php?<?= $baseQs ?>" enctype="multipart/form-data" class="row g-3">
+
+    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrfToken(), ENT_QUOTES, 'UTF-8') ?>">
+
       <input type="hidden" name="action" value="save">
       <input type="hidden" name="id" value="<?= $formId ?>">
 
@@ -335,6 +346,9 @@ require 'includes/header.php';
                 >Edit</a>
 
                 <form method="post" action="items.php?<?= $baseQs ?>" class="d-inline">
+
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrfToken(), ENT_QUOTES, 'UTF-8') ?>">
+
                   <input type="hidden" name="action" value="toggle">
                   <input type="hidden" name="id" value="<?= $i['id'] ?>">
                   <button class="btn btn-sm btn-outline-secondary">
@@ -348,6 +362,7 @@ require 'includes/header.php';
                   class="d-inline"
                   onsubmit="return confirm('Delete this item?');"
                 >
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrfToken(), ENT_QUOTES, 'UTF-8') ?>">
                   <input type="hidden" name="action" value="delete">
                   <input type="hidden" name="id" value="<?= $i['id'] ?>">
                   <button class="btn btn-sm btn-outline-danger">Delete</button>
