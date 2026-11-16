@@ -47,7 +47,6 @@ if (
     }
 }
 
-// Escape text before displaying it in HTML
 function menuText($value): string
 {
     return htmlspecialchars(
@@ -79,7 +78,6 @@ function menuText($value): string
 
 <body>
 
-  <!-- BRAND HEADER -->
   <header class="site-header">
     <a
       href="index.php"
@@ -99,7 +97,6 @@ function menuText($value): string
 
   <main>
 
-    <!-- HOME PAGE HERO -->
     <?php if (!$showCategoryOnly): ?>
 
       <section
@@ -116,7 +113,6 @@ function menuText($value): string
         </div>
       </section>
 
-    <!-- SELECTED CATEGORY PAGE -->
     <?php elseif ($selectedCategory): ?>
 
       <section class="category-intro">
@@ -140,7 +136,6 @@ function menuText($value): string
     <?php endif; ?>
 
 
-    <!-- MENU -->
     <section class="menu" id="menu">
 
       <?php if (!$showCategoryOnly): ?>
@@ -158,7 +153,6 @@ function menuText($value): string
       <?php endif; ?>
 
 
-      <!-- INVALID OR INACTIVE CATEGORY -->
       <?php if (
           $showCategoryOnly &&
           !$selectedCategory

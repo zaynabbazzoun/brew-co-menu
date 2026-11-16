@@ -19,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $username = trim((string) ($_POST['username'] ?? ''));
         $password = (string) ($_POST['password'] ?? '');
 
-        // A basic per-session rate limit; stronger server-wide limits are needed for public deployment.
         $recent = (int) ($_SESSION['login_attempt_window'] ?? 0);
         if ($recent === 0 || time() - $recent > 900) {
             $_SESSION['login_attempt_window'] = time();

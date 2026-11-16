@@ -38,7 +38,6 @@ requireAdmin();
     </nav>
 
     <div class="row g-0">
-      <!-- Sidebar -->
       <aside class="col-lg-3 col-xl-2 collapse d-lg-block sidebar p-3" id="sidebarMenu">
         <div class="brand text-center py-3 d-none d-lg-block">BREW CO.</div>
 

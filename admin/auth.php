@@ -1,5 +1,4 @@
 <?php
-// Shared session and login helpers for the admin area.
 
 function startAdminSession(): void
 {
@@ -10,7 +9,7 @@ function startAdminSession(): void
     $isHttps = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
     session_name('brew_co_admin');
     session_set_cookie_params([
-        'lifetime' => 0, // Ends when the browser session ends.
+        'lifetime' => 0, 
         'path' => '/',
         'secure' => $isHttps,
         'httponly' => true,
@@ -35,7 +34,6 @@ function requireAdmin(): void
         exit;
     }
 
-    // Automatically sign out after 30 minutes of inactivity.
     $lastActivity = (int) ($_SESSION['last_activity'] ?? 0);
     if ($lastActivity === 0 || time() - $lastActivity > 1800) {
         endAdminSession();

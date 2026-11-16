@@ -26,7 +26,6 @@ $visibleItems = (int) $pdo->query(
      WHERE i.is_active = 1 AND c.is_active = 1"
 )->fetchColumn();
 
-// Menu Health
 $missingPhotos = (int) $pdo->query(
     "SELECT COUNT(*) FROM items
      WHERE image IS NULL OR TRIM(image) = ''"
@@ -94,7 +93,6 @@ require 'includes/header.php';
 
 <div class="brew-dashboard">
 
-  <!-- PAGE HEADER -->
   <header class="db-page-header">
 
     <div class="db-eyebrow">
@@ -117,7 +115,6 @@ require 'includes/header.php';
 
   </header>
 
-  <!-- OVERVIEW -->
   <section class="db-section">
 
     <div class="db-section-heading">
@@ -129,7 +126,6 @@ require 'includes/header.php';
 
     <div class="db-overview-grid">
 
-      <!-- Featured Statistic -->
       <article class="db-feature-card">
 
         <div class="db-feature-top">
@@ -153,7 +149,6 @@ require 'includes/header.php';
 
       </article>
 
-      <!-- Smaller Statistics -->
       <div class="db-mini-grid">
 
         <article class="db-mini-card db-mini-card-blue">
@@ -200,10 +195,8 @@ require 'includes/header.php';
 
   </section>
 
-  <!-- LOWER DASHBOARD -->
   <div class="db-lower-grid">
 
-    <!-- MENU HEALTH -->
     <section class="db-panel db-attention-panel">
 
       <div class="db-panel-top">
@@ -276,7 +269,6 @@ require 'includes/header.php';
 
     </section>
 
-    <!-- QUICK ACTIONS -->
     <aside class="db-panel db-actions-panel">
 
       <span class="db-section-index">
