@@ -1,0 +1,10 @@
+
+# Local database configuration
+/config/db.php
+
+# One-time admin setup
+/admin/setup.php
+
+# Environment and logs
+.env
+*.log
